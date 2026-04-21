@@ -27,7 +27,7 @@ jobs:
       # Step 4: Install all dependencies from pyproject.toml
       - name: Install dependencies
         working-directory: python-nlp
-        run: uv sync --all-extras --dev
+        run: uv sync --group dev
 
       # Step 5: Run all tests
       - name: Run tests
