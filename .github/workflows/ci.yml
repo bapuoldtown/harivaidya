@@ -1,0 +1,35 @@
+name: Harivaidya CI
+
+# Run this whenever code is pushed or pull request opened
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download your code from the repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Install uv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      # Step 3: Install Python 3.12
+      - name: Set up Python
+        run: uv python install 3.12
+
+      # Step 4: Install all dependencies from pyproject.toml
+      - name: Install dependencies
+        working-directory: python-nlp
+        run: uv sync
+
+      # Step 5: Run all tests
+      - name: Run tests
+        working-directory: python-nlp
+        run: uv run pytest tests/ -v
